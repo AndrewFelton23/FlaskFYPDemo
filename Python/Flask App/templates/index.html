@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature Sensor</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateTemperature() {
+            $.ajax({
+                url: '/get_temperature',
+                type: 'GET',
+                success: function(response) {
+                    var temperature = response.temperature;
+                    $('#temperatureValue').text(temperature);
+                },
+                error: function() {
+                    console.log('Error retrieving temperature');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            // Update the temperature every 1 second
+            setInterval(updateTemperature, 1000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Temperature: <span id="temperatureValue">{{ temperature }}</span>°C</h1>
+</body>
+</html>
